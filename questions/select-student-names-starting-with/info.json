@@ -1,0 +1,15 @@
+{
+  "uuid": "31b8fcb1-3d88-450e-9822-62692e115c86",
+  "title": "Select student names starting with a given letter",
+  "topic": "SQL Queries",
+  "type": "v3",
+  "singleVariant": true,
+  "gradingMethod": "External",
+  "externalGradingOptions": {
+      "enabled": true,
+      "image": "mysql-test:latest",
+      "serverFilesCourse": ["sql-grader/"],
+      "entrypoint": "/grade/serverFilesCourse/sql-grader/run.sh",
+      "timeout": 20
+  }
+}

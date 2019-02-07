@@ -1,0 +1,16 @@
+{
+  "uuid": "af446889-e2e2-44b2-b657-e39191c34085",
+  "name": "CS 411",
+  "title": "Databases",
+  "options": {
+    "useNewQuestionRenderer": true
+  },
+  "topics": [
+    {
+      "name": "SQL Queries",
+      "color": "blue1",
+      "description": "Reading and writing SQL queries"
+    }
+  ],
+  "tags": []
+}

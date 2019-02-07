@@ -1,0 +1,35 @@
+<pl-question-panel>
+  <p>
+    Consider the following database schema for a <code>Students</code> table:
+  </p>
+
+  <table class="table" style="width: auto;">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><u>Netid</u></td>
+        <td>String NOT NULL</td>
+      </tr>
+      <tr>
+        <td>FirstName</td>
+        <td>String NOT NULL</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    Write a query that selects the <code>Netid</code> of all students whose name starts with the letter "L".
+  </p>
+
+  <pl-file-editor file-name="query.sql" ace-mode="ace/mode/mysql"></pl-file-editor>
+</pl-question-panel>
+
+<pl-submission-panel>
+  <pl-file-preview></pl-file-preview>
+  <pl-external-grader-results></pl-external-grader-results>
+</pl-submission-panel>
