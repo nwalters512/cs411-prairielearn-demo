@@ -5,10 +5,11 @@
 ##########################
 
 # First thing's first: start mysql daemon
+echo "[run] starting MySQL"
 service mysql start
 mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost';"
 mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';"
-echo "user!!"
+echo "[run] MySQL started and configured"
 
 # the directory where the job stuff is
 JOB_DIR='/grade/'
@@ -43,13 +44,8 @@ echo "" > $BIN_DIR/__init__.py
 
 cd $JOB_DIR'run/'
 
-# give the ag user the ownership of it's small bin folder
-sudo chown ag $BIN_DIR
-sudo chmod -R +rw $BIN_DIR
-
 echo "[run] starting autograder"
 
-# we run the autograder as a limited user called ag
 bash -c 'python3 grade.py'
 
 if [ ! -s results.json ]

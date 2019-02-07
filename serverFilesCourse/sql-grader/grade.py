@@ -1,4 +1,5 @@
 import json
+import sys
 import mysql.connector
 import sqlparse
 
@@ -6,35 +7,101 @@ import sqlparse
 # "setup.sql" file, and sets that database as the current database. Returns a
 # cursor for use
 def create_and_use_database(cnx, name):
-
-
-if __name__ == "__main__":
-  cnx = mysql.connector.connect(user='root', password="password")
   cursor = cnx.cursor()
 
-  # Default database setup
-  cursor.execute("CREATE DATABASE solution DEFAULT CHARACTER SET 'utf8'")
-  cursor.execute("USE solution")
+  cursor.execute("CREATE DATABASE {} DEFAULT CHARACTER SET 'utf8'".format(name))
+  cursor.execute("USE {}".format(name))
+
+  # populate with data
   with open('/grade/tests/setup.sql') as setup_queries_file:
     setup_queries_raw = setup_queries_file.read()
   setup_queries = sqlparse.split(setup_queries_raw)
   for query in setup_queries:
     cursor.execute(query)
 
-  # Generate solution rows based on the solution query
-  with open('/grade/tests/solution.sql') as solution_file:
-    solution_query = solution_file.read()
-  print(solution_query)
-  cursor.execute(solution_query)
-  for solution_row in cursor:
-    print(solution_row)
+  return cursor
 
-  # Create a new table for students so that they're working with a completely separate data set
-  with open('/grade/student/query.sql') as student_file:
-    student_query = student_file.read()
+def record_failure_and_exit(msg):
+  grading_result = {
+    'score': 0.0,
+    'succeeded': False,
+    'message': msg,
+  }
+  with open('results.json', mode='w') as out:
+    json.dump(grading_result, out)
+  sys.exit(0)
+
+def list_of_tuples_to_string(elems):
+  out = ""
+  for elem in elems:
+    first = True
+    for val in elem:
+      if first:
+        out += " "
+      else:
+        first = False
+      out += str(val)
+    out += "\n"
+  return out
+
+
+if __name__ == "__main__":
+  cnx = mysql.connector.connect(user='root', password="password")
+
   grading_result = {}
-  grading_result['score'] = 0.0
-  grading_result['succeeded'] = False
+
+  # Generate solution rows based on the solution query
+  solution_rows = []
+  try:
+    with open('/grade/tests/solution.sql') as solution_file:
+      solution_query = solution_file.read()
+    solution_cursor = create_and_use_database(cnx, "solution")
+    solution_cursor.execute(solution_query)
+    for solution_row in solution_cursor:
+      solution_rows.append(solution_row)
+      print(solution_row)
+  except Exception as e:
+    record_failure_and_exit("Error in solution query: " + str(e))
+
+  # Run student query in a brand-new, duplicate database
+  student_rows = []
+  try:
+    with open('/grade/student/query.sql') as student_file:
+      student_query = student_file.read()
+    student_cursor = create_and_use_database(cnx, "student")
+    student_cursor.execute(student_query)
+    for student_row in student_cursor:
+      student_rows.append(student_row)
+      print(student_row)
+  except Exception as e:
+    record_failure_and_exit(str(e))
+
+  # TODO compare results here
+  success = True
+  if len(solution_rows) != len(student_rows):
+    success = False
+  else:
+    for row_pair in zip(solution_rows, student_rows):
+      if len(row_pair[0]) != len(row_pair[1]):
+        success = False
+      for val_pair in zip(row_pair[0], row_pair[1]):
+        if val_pair[0] != val_pair[1]:
+          success = False
+          break
+
+  # Build student-readable output
+  output = ""
+  output += "Expected result\n"
+  output += "===============\n"
+  output += list_of_tuples_to_string(solution_rows)
+  output += "\n\n"
+  output += "Actual results\n"
+  output += "==============\n"
+  output += list_of_tuples_to_string(student_rows)
+
+  grading_result = {}
+  grading_result['score'] = (1.0 if success else 0.0)
+  grading_result['succeeded'] = success
   grading_result['output'] = output
 
   with open('results.json', mode='w') as out:

@@ -1,1 +1,1 @@
-SELECT * FROM Students WHERE FirstName LIKE "L%";
+SELECT Netid FROM Students WHERE FirstName LIKE "L%";
