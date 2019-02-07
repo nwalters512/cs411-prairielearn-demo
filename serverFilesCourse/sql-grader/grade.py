@@ -76,7 +76,7 @@ if __name__ == "__main__":
   except Exception as e:
     record_failure_and_exit(str(e))
 
-  # TODO compare results here
+  # Diff solution and student query results
   success = True
   if len(solution_rows) != len(student_rows):
     success = False
@@ -91,8 +91,8 @@ if __name__ == "__main__":
 
   # Build student-readable output
   output = ""
-  output += "Expected result\n"
-  output += "===============\n"
+  output += "Expected results\n"
+  output += "================\n"
   output += list_of_tuples_to_string(solution_rows)
   output += "\n\n"
   output += "Actual results\n"

@@ -1,0 +1,15 @@
+{
+  "uuid": "daeb15e9-c91e-48a3-b4a7-b850b325729d",
+  "title": "Select students in same departments as Evan",
+  "topic": "SQL Queries",
+  "type": "v3",
+  "singleVariant": true,
+  "gradingMethod": "External",
+  "externalGradingOptions": {
+      "enabled": true,
+      "image": "mysql-test:latest",
+      "serverFilesCourse": ["sql-grader/"],
+      "entrypoint": "/grade/serverFilesCourse/sql-grader/run.sh",
+      "timeout": 20
+  }
+}

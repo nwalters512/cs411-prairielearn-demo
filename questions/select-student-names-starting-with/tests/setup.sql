@@ -1,9 +1,10 @@
 CREATE TABLE Students (
-  Netid VARCHAR(9) NOT NULL,
-  FirstName TEXT NOT NULL,
+  Netid VARCHAR(10),
+  FirstName VARCHAR(255),
+  FirstName VARCHAR(255),
   PRIMARY KEY (Netid)
 );
 
 INSERT INTO Students VALUES
-  ("nwalter2", "Nathan"),
-  ("ljones5", "Lee");
+  ("nwalter2", "Nathan", "Walters"),
+  ("ljones5", "Lee", "Jones");

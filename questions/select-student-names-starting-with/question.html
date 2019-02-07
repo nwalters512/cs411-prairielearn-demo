@@ -3,8 +3,8 @@
     Consider the following database schema for a <code>Students</code> table:
   </p>
 
-  <table class="table" style="width: auto;">
-    <thead>
+  <table class="table table-sm" style="width: auto;">
+    <thead class="thead-light">
       <tr>
         <th>Name</th>
         <th>Type</th>
@@ -12,18 +12,22 @@
     </thead>
     <tbody>
       <tr>
-        <td><u>Netid</u></td>
-        <td>String NOT NULL</td>
+        <td><u>NetId</u></td>
+        <td>VARCHAR(10)</td>
       </tr>
       <tr>
         <td>FirstName</td>
-        <td>String NOT NULL</td>
+        <td>VARCHAR(255)</td>
+      </tr>
+      <tr>
+        <td>LastName</td>
+        <td>VARCHAR(255)</td>
       </tr>
     </tbody>
   </table>
 
   <p>
-    Write a query that selects the <code>Netid</code> of all students whose name starts with the letter "L".
+    Write a query that selects the <code>NetId</code> of all students whose name starts with the letter "L".
   </p>
 
   <pl-file-editor file-name="query.sql" ace-mode="ace/mode/mysql"></pl-file-editor>
