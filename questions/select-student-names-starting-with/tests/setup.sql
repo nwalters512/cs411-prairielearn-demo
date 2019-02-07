@@ -1,7 +1,7 @@
 CREATE TABLE Students (
   Netid VARCHAR(10),
   FirstName VARCHAR(255),
-  FirstName VARCHAR(255),
+  LastName VARCHAR(255),
   PRIMARY KEY (Netid)
 );
 
