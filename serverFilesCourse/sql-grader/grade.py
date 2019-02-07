@@ -36,7 +36,7 @@ def list_of_tuples_to_string(elems):
   for elem in elems:
     first = True
     for val in elem:
-      if first:
+      if not first:
         out += " "
       else:
         first = False
