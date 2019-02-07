@@ -1,0 +1,77 @@
+<pl-question-panel>
+  <p>
+    Consider the following table schema definitions:
+  </p>
+
+  <b>Students</b>
+  <table class="table table-sm" style="width: auto;">
+    <thead class="thead-light">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><u>NetId</u></td>
+        <td>VARCHAR(10)</td>
+      </tr>
+      <tr>
+        <td>FirstName</td>
+        <td>VARCHAR(255)</td>
+      </tr>
+      <tr>
+        <td>LastName</td>
+        <td>VARCHAR(255)</td>
+      </tr>
+      <tr>
+        <td>Department</td>
+        <td>VARCHAR(100)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <b>Enrollments</b>
+  <table class="table table-sm" style="width: auto;">
+    <thead class="thead-light">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><u>NetId</u></td>
+        <td>VARCHAR(10)</td>
+      </tr>
+      <tr>
+        <td><u>CRN</u></td>
+        <td>INT</td>
+      </tr>
+      <tr>
+        <td>Credits</td>
+        <td>INT</td>
+      </tr>
+      <tr>
+        <td>Score</td>
+        <td>REAL</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    Write a query that deletes all students who aren't enrolled in any courses.
+  </p>
+
+  <p>
+    <b>Note:</b> you will be graded on the state of the <code>Students</code> table
+    after your query executes.
+  </p>
+
+  <pl-file-editor file-name="query.sql" ace-mode="ace/mode/mysql"></pl-file-editor>
+</pl-question-panel>
+
+<pl-submission-panel>
+  <pl-file-preview></pl-file-preview>
+  <pl-external-grader-results></pl-external-grader-results>
+</pl-submission-panel>

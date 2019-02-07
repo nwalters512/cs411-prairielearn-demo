@@ -1,0 +1,15 @@
+{
+  "uuid": "a8e91d17-095b-4bc5-b9e8-a5e486713a37",
+  "title": "Delete students without any enrollments",
+  "topic": "SQL Queries",
+  "type": "v3",
+  "singleVariant": true,
+  "gradingMethod": "External",
+  "externalGradingOptions": {
+      "enabled": true,
+      "image": "mysql-test:latest",
+      "serverFilesCourse": ["sql-grader/"],
+      "entrypoint": "/grade/serverFilesCourse/sql-grader/run.sh",
+      "timeout": 20
+  }
+}

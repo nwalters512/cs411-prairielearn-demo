@@ -2,6 +2,7 @@ import json
 import sys
 import mysql.connector
 import sqlparse
+import os.path
 
 # Creates a new database with the given name, populates it with data from the
 # "setup.sql" file, and sets that database as the current database. Returns a
@@ -50,6 +51,14 @@ if __name__ == "__main__":
 
   grading_result = {}
 
+  # If `dump.sql` is present, that means we'll need to just execute
+  # the solution and student queries without inspecting their output,
+  # and then run the dump to compare the table state after.
+  is_modification = os.path.isfile('/grade/tests/dump.sql')
+  if is_modification:
+    with open('/grade/tests/dump.sql') as dump_file:
+      dump_query  = dump_file.read()
+
   # Generate solution rows based on the solution query
   solution_rows = []
   try:
@@ -57,9 +66,16 @@ if __name__ == "__main__":
       solution_query = solution_file.read()
     solution_cursor = create_and_use_database(cnx, "solution")
     solution_cursor.execute(solution_query)
+    # Even if this is a query that will be checked by a dump,
+    # we still need to clear the cursor
     for solution_row in solution_cursor:
       solution_rows.append(solution_row)
-      print(solution_row)
+    if is_modification:
+      solution_rows.clear()
+      solution_cursor.execute(dump_query)
+      for solution_row in solution_cursor:
+        solution_rows.append(solution_row)
+
   except Exception as e:
     record_failure_and_exit("Error in solution query: " + str(e))
 
@@ -72,7 +88,11 @@ if __name__ == "__main__":
     student_cursor.execute(student_query)
     for student_row in student_cursor:
       student_rows.append(student_row)
-      print(student_row)
+    if is_modification:
+      student_rows.clear()
+      student_cursor.execute(dump_query)
+      for student_row in student_cursor:
+        student_rows.append(student_row)
   except Exception as e:
     record_failure_and_exit(str(e))
 
