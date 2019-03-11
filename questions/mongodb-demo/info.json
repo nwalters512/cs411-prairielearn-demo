@@ -1,0 +1,14 @@
+{
+  "uuid": "86ce97b8-40d0-4edd-b6c8-dad23ac06a88",
+  "title": "Delete students without any enrollments",
+  "topic": "SQL Queries",
+  "type": "v3",
+  "singleVariant": true,
+  "gradingMethod": "External",
+  "externalGradingOptions": {
+    "enabled": true,
+    "image": "cs411-mongo:latest",
+    "entrypoint": "/run.sh",
+    "timeout": 20
+  }
+}
